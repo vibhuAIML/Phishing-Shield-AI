@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # In-memory Redis message broker and results cache
+  redis:
+    image: redis:7-alpine
+    container_name: phishing_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Primary Web Application & REST API
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: phishing_soc_web
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - FLASK_ENV=production
+      - M365_SIMULATE=true
+      - GMAIL_SIMULATE=true
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./feedback_store.db:/app/feedback_store.db
+
+  # Celery Distributed Asynchronous Task Worker
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: phishing_celery_worker
+    restart: unless-stopped
+    command: celery -A celery_tasks.celery_app worker --loglevel=info --concurrency=2
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - M365_SIMULATE=true
+      - GMAIL_SIMULATE=true
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./feedback_store.db:/app/feedback_store.db
+
+volumes:
+  redis_data:
