@@ -1,0 +1,140 @@
+
+======================================================================
+1. OVERVIEW
+======================================================================
+Rows: 182,364    Columns: 11
+Columns: ['id', 'subject', 'body', 'label', 'source', 'sender', 'receiver', 'date', 'urls', 'words', 'chars']
+
+Label counts:
+  Legitimate (0): 90,775  (49.8%)
+  Phishing/Spam (1): 91,589  (50.2%)
+
+======================================================================
+2. SOURCES x LABEL
+======================================================================
+label                  Legitimate (0)  Phishing/Spam (1)  total
+source                                                         
+Zionia_Phishing                 38504              42635  81139
+CEAS_08                         17290              21674  38964
+Enron                           15474              13950  29424
+Kaggle_Phishing_Email           10876               6201  17077
+SpamAssassin                     4090               1708   5798
+Nigerian_Fraud                      0               3290   3290
+Ling                             2401                458   2859
+Nazario                             0               1550   1550
+Nigerian_5                       1002                  0   1002
+Nazario_5                         961                  0    961
+DarkKnight25_Phishing             100                100    200
+Phishing_validation                77                 23    100
+
+Sources containing only ONE class (risk of the model learning source style):
+   ['Nazario', 'Nazario_5', 'Nigerian_5', 'Nigerian_Fraud']
+
+======================================================================
+3. MISSING VALUES
+======================================================================
+          missing  empty_string  missing_%
+id              0             0       0.00
+subject         0         97152       0.00
+body            0             0       0.00
+label           0             0       0.00
+source          0             0       0.00
+sender     130936             0      71.80
+receiver   132883             0      72.87
+date       131286             0      71.99
+urls        32383             0      17.76
+words           0             0       0.00
+chars           0             0       0.00
+
+======================================================================
+4. EMAIL LENGTH (words in body)
+======================================================================
+count     182364.0
+mean         249.6
+std         8294.7
+min            1.0
+25%           44.0
+50%          104.0
+75%          241.0
+90%          486.0
+95%          728.0
+99%         1852.0
+max      3527576.0
+
+Median words by label:
+label
+Legitimate (0)       141.0
+Phishing/Spam (1)     71.0
+
+Median words by source:
+source
+DarkKnight25_Phishing      8.0
+Phishing_validation       15.0
+Zionia_Phishing           78.0
+CEAS_08                   88.0
+Nazario                  104.0
+Nazario_5                148.0
+Enron                    149.0
+SpamAssassin             154.0
+Kaggle_Phishing_Email    166.0
+Nigerian_5               177.5
+Ling                     401.0
+Nigerian_Fraud           430.0
+
+Emails longer than 256 words: 23.6%
+Emails longer than 512 words: 9.2%
+Very short emails (<5 words): 1,108
+
+======================================================================
+5. DUPLICATES
+======================================================================
+Exact duplicate (subject+body) rows: 0
+Duplicate bodies only: 639
+
+======================================================================
+6. URLS (if present)
+======================================================================
+Share of rows with url flag/count > 0, by label:
+label
+Legitimate (0)       0.204
+Phishing/Spam (1)    0.213
+
+Bodies containing a link, by label:
+label
+Legitimate (0)       0.212
+Phishing/Spam (1)    0.198
+
+======================================================================
+7. TEXT STYLE SIGNALS (share of emails, by label)
+======================================================================
+label                     Legitimate (0)  Phishing/Spam (1)
+has_exclamation                    0.132              0.242
+has_dollar                         0.083              0.111
+has_urgent_words                   0.149              0.173
+mostly_uppercase_subject           0.001              0.023
+
+======================================================================
+8. MOST DISTINCTIVE WORDS PER CLASS
+======================================================================
+Most phishing/spam-like: httpwwwcnncomvideopartnersemailindexhtmlurlvideocrime, httpwwwcnncomvideopartnersemailindexhtmlurlvideous, gotti, montauk, httpwwwcnncom, httpwwwcnncomvideopartnersemailindexhtmlurlvideopolitics, sot, cnncom, bikini, karadzic, teri, wynter, httpwwwcnncomvideopartnersemailindexhtmlurlvideotech, httpwwwcnncomfeedback, httpwwwcnncomprivacyhtml, httpwwwcnncomlinktobnmanagehtml, showbizmovies, httpwwwcnncomvideopartnersemailindexhtmlurlvideoworld, beheading, usaa
+Most legitimate-like:   enron, kaminski, linguistics, dbcaps, opensuse, mmbtu, ees, pythondev, submissionid, enronxgate, perl, scheduling, hourahead, python, linguistic, exmh, workshop, tangomu, tangomucom, louise
+
+======================================================================
+9. SAMPLE EMAILS (random, truncated)
+======================================================================
+
+--- Phishing/Spam (1) ---
+[Zionia_Phishing] Subject: 
+    kaitlin corcoran kaitlinpakizscrcz noticed first increase length burst joy gradually love gun going escalate bigger one httpwearplacescom hi im george sorosbrother sending medicine items romania iprovide scholarships bla...
+[CEAS_08] Subject: Fast Shipping WorldWide. 
+     Be the stud in 2008, and achieve all your dreams of super size! Size DOES matter - change your life today! http://jumpwill.com/ ...
+[Enron] Subject: discounted mortgage broker 512517
+    moates are at an all tyone with any crest and most competitive rates . simple takes under 1 minute . try now 512517...
+
+--- Legitimate (0) ---
+[Zionia_Phishing] Subject: 
+    aaron kulkis cmiqlkx91hotpopcom joe sloan wrote aaron kulkis wrote joe sloan wrote jerry houston wrote joe morris wrote yes course run cli command mounted rw filesystem check boot mounted rw could remount filesystem ro c...
+[CEAS_08] Subject: Re: [R] Opening R from Tinn without setting directory each time
+     Hi - someone has just e-mailed me direct with the answer which it'd be helpful to paste just so future users who have the same issue can see. Just follow the advice below and it works perfectly. Open a command window (R...
+[Enron] Subject: re : associates prc meeting - to be rescheduled
+    hi sally , unfortunately i was out of the office for the latter part of last week and was unable to get back to you with my resume . please find it attached . i understand the prc meeting has been scheduled for tomorrow ...
